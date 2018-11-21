@@ -1,0 +1,17 @@
+version: "3.4"
+services:
+  web:
+    build:
+      context: .
+    env_file: .env.docker
+    ports:
+      - "8000:8000"
+    command: ["/bin/bash", "-l", "-c", "tail", "-f", "/dev/null"]
+    tty: true
+    volumes:
+      - ./config.json:/cloudmapper/config.json
+      - ./account-data:/cloudmapper/account-data
+      - ./web:/cloudmapper/web
+      
+    working_dir: /cloudmapper/
+    command: ["python", "cloudmapper.py", "webserver", "--public"]
